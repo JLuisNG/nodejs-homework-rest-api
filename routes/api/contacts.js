@@ -1,18 +1,15 @@
-const express = require("express");
-const ctrl = require("../../controllers/contacts");
-const schema = require("../../schemas/contacts");
-const { celebrate, Segments } = require('celebrate');
-
+const express = require('express');
 const router = express.Router();
+const contactsController = require('../controllers/contacts');
 
-router.get("/", ctrl.getContacts);
-router.get("/:contactId", ctrl.getById);
-router.post("/", celebrate({
-  [Segments.BODY]: schema
-}), ctrl.addContact);
-router.delete("/:contactId", ctrl.removeContact);
-router.put("/:contactId", celebrate({
-  [Segments.BODY]: schema
-}), ctrl.updateContact);
+router.get('/', contactsController.listContacts);
+
+router.get('/:id', contactsController.getById);
+
+router.post('/', contactsController.addContact);
+
+router.delete('/:id', contactsController.removeContact);
+
+router.put('/:id', contactsController.updateContact);
 
 module.exports = router;
